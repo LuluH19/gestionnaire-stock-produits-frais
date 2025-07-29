@@ -37,8 +37,10 @@
   </template>
   
   <script setup>
-  import { ref } from 'vue'
+  import { ref, inject } from 'vue'
   import axios from 'axios'
+  
+  const addNotification = inject('addNotification')
   
   const form = ref({
     name: '',
@@ -56,9 +58,11 @@
       successMessage.value = 'Produit ajouté avec succès !'
       errorMessage.value = ''
       form.value = { name: '', quantity: 1, expirationDate: '', category: '' }
+      addNotification('Produit ajouté avec succès !', 'success')
     } catch (err) {
       errorMessage.value = 'Erreur lors de l\'ajout du produit.'
       successMessage.value = ''
+      addNotification('Erreur lors de l\'ajout du produit.', 'error')
       console.error(err)
     }
   }
